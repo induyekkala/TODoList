@@ -103,6 +103,14 @@ public class TaskManagerTest {
      String message = taskManager.removeTask("java");
      assertEquals(message, "Task removed from the list");
     }
+    @Test
+    public void testEditTaskStatus() {
+     
+     String message=taskManager.editTaskStatus("java");
+     assertEquals(message,"task status marked as Done");
+     
+     
+    }
 
     
     
