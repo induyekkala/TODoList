@@ -97,6 +97,12 @@ public class TaskManagerTest {
     public void testListOfTasks() {
      assertTrue(taskManager.listOfTasks().size() <= 0);
     }
+    
+    @Test
+    public void testRemoveTask() {
+     String message = taskManager.removeTask("java");
+     assertEquals(message, "Task removed from the list");
+    }
 
     
     
