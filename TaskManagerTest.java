@@ -23,6 +23,7 @@ public class TaskManagerTest {
     private ArrayList<UserTask> listOfTasks = new ArrayList<UserTask>();
     private DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     private TaskManager taskManager = new TaskManager();
+    private UserTask userTask=new UserTask();
 
     @Test
     public void testSortProjectName() {
@@ -83,4 +84,14 @@ public class TaskManagerTest {
 	assertTrue(Arrays.equals(arr, userTaskArray));
 
     }
+    @Test
+    public void testFindTask() {
+     userTask = taskManager.findTask("java");
+     if(userTask==null)
+     assertNull(userTask);
+     else
+     assertNotNull(userTask);
+    }
+    
+    
 }
