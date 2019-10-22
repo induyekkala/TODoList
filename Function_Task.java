@@ -36,7 +36,6 @@ public class Function_Task {
 	    taskDate = (Date) formatter.parse(dateValue);
 
 	} catch (ParseException e) {
-//	    System.out.println("Please enter date in correct format"+e.getMessage());
 	    status = false;
 	}
 	return status;
@@ -65,8 +64,10 @@ public class Function_Task {
 	    int line = fileHandler.findLineNumber();
 	    if (list_projectName[0].equals(projectName) || list_projectName[1].equals(projectName)) {
 		boolean status=taskManager.isDuplicateTask(taskTitle);
+		System.out.println(status);
 		if(status==true)
 		{
+		    System.out.println(1);
 		user = new UserTask(line, taskTitle, dueDate, taskStatus, projectName);
 		List<UserTask> usersTask = new ArrayList<UserTask>();
 		
