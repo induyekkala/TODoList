@@ -114,16 +114,19 @@ public class Function_Task {
 	} else {
 
 	    System.out.println(
-		    "****************************************************************************************\n");
-	    System.out.println("TaskId\t\t Task title\t\tTaskDueDate\t    Status\t\tProject Name \n");
+		    "****************************************************************************************************\n");
+	    System.out.println("TaskId\t\t Task title\t\t   TaskDueDate\t           Status\t\\t         Project Name \n");
 	    System.out.println(
-		    "**************************************************************************************** \n");
+		    "**************************************************************************************************** \n");
 
 	    for (String sortedUserTask : userTask) {
-
-		System.out.println(sortedUserTask + "\t");
+		
+		System.out.println(sortedUserTask.replace(",","\t\t"));
+		//System.out.println(sortedUserTask + "\t");
 		System.out.println("\n");
 	    }
+	    
+	    
 	}
 
     }
@@ -135,15 +138,13 @@ public class Function_Task {
 	} else {
 	    if (userTask != null) {
 		System.out.println(
-			"****************************************************************************************\n");
-		System.out.println("TaskId\t\t Task title\t\tTaskDueDate\t    Status\t\tProject Name \n");
+			"************************************************************************************************\n");
+		System.out.println("TaskId\t\t Task title\t\t  TaskDueDate\t         Status\t\t         Project Name \n");
 		System.out.println(
-			"**************************************************************************************** \n");
+			"************************************************************************************************ \n");
 
 		for (String sortedUserTask : userTask) {
-
-		    System.out.printf(String.format("%20s", sortedUserTask));
-
+		    System.out.println(sortedUserTask.replace(",","\t\t"));
 		    System.out.println("\n");
 		}
 	    }
