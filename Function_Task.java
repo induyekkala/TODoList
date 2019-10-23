@@ -18,7 +18,7 @@ public class Function_Task {
     private TaskManager taskManager = new TaskManager();
 //	 Date format
     private DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-    private UserTask user = new UserTask();
+    private UserTask userTask = new UserTask();
     private Scanner input = new Scanner(System.in);
     private FileHandler fileHandler = new FileHandler();
     private ArrayList<UserTask> usersTask = new ArrayList<UserTask>();
@@ -55,23 +55,22 @@ public class Function_Task {
 	    Date taskDueDate = null;
 	    taskDueDate = (Date) formatter.parse(taskDate);
 	    String dueDate = formatter.format(taskDueDate);
-	    user.setTaskStatus("Not Done");
-	    String taskStatus = user.getTaskStatus();
+	    userTask.setTaskStatus("Not Done");
+	    String taskStatus = userTask.getTaskStatus();
 	    System.out
 		    .println("Enter a project name (Novare SDA Lund,Novare SDA Stockholm are the valid project names)");
 	    String projectName = input.nextLine();
 	    String list_projectName[] = { "Novare SDA Lund", "Novare SDA Stockholm" };
 	    int line = fileHandler.findLineNumber();
 	    if (list_projectName[0].equals(projectName) || list_projectName[1].equals(projectName)) {
-		boolean status=taskManager.isDuplicateTask(taskTitle);
+		boolean status=taskManager.isDuplicateTask(taskTitle);	
 		System.out.println(status);
 		if(status==true)
-		{
-		    System.out.println(1);
-		user = new UserTask(line, taskTitle, dueDate, taskStatus, projectName);
+		{	    
+		userTask = new UserTask(line, taskTitle, dueDate, taskStatus, projectName);
 		List<UserTask> usersTask = new ArrayList<UserTask>();
 		
-		usersTask.add(user);
+		usersTask.add(userTask);
 		fileHandler.writeCsv(filePath, usersTask);
 		}
 		else
@@ -87,9 +86,9 @@ public class Function_Task {
 		System.out.println("Re-enter the project name");
 		projectName = input.nextLine();
 		taskManager.isDuplicateTask(taskTitle);
-		user = new UserTask(line, taskTitle, dueDate, taskStatus, projectName);
+		userTask = new UserTask(line, taskTitle, dueDate, taskStatus, projectName);
 		List<UserTask> usersTask = new ArrayList<UserTask>();
-		usersTask.add(user);
+		usersTask.add(userTask);
 		fileHandler.writeCsv(filePath, usersTask);
 	    }
 
@@ -197,23 +196,22 @@ public class Function_Task {
     public void editATask() {
 
 	Scanner input = new Scanner(System.in);
-	System.out.println("\\n1. Edit Title \n 2.Edit Status \n3. Edit Due Date");
+	System.out.println("Enter the task id whose details to be updated");
+	String taskTitle=input.next();
+	System.out.println("Please select the option from the menu to edit");
+	System.out.println("\n 1. Edit Title \n 2. Edit Due Date");
 	System.out.println("Enter the choice");
-	int choice = input.nextInt();
-	switch (choice) {
+	
+	int readChoice = input.nextInt();
+	switch (readChoice) {
 
 	case 1:
-	    System.out.println("Enter the which Task Id to be changed");
-	    int taskId = input.nextInt();
-	    taskManager.editTaskTitle(taskId);
+	    taskManager.editTask(taskTitle,readChoice);   
+	    break;   
 	    
+	case 2:    
+	    taskManager.editTask(taskTitle,readChoice);
 	    break;
-	case 2:
-	    System.out.println("Enter the which Task Title status to be changed ");
-	    String taskTitle = input.nextLine();
-	    taskManager.editTaskStatus(taskTitle);
-	    break;
-	    
 
 	}
 
