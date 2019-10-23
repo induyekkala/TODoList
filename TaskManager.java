@@ -10,7 +10,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -25,6 +24,7 @@ public class TaskManager {
     private ArrayList<UserTask> listOfTasks = new ArrayList<UserTask>();
     private File file_delete = new File(filePath);
     private Scanner input = new Scanner(System.in);
+    private String message = "";
 
     public String[] sortProjectName() {
 	String[] userTaskArray = { "" };
@@ -144,7 +144,6 @@ public class TaskManager {
 	for (i = 0; i < listOfTasks.size(); i++) {
 	    UserTask userTask = listOfTasks.get(i);
 	    String title = userTask.getTaskTitle();
-	    System.out.println(title);
 	    if (title.equals(taskTitle)) {
 		status = false;
 		break;
@@ -156,31 +155,44 @@ public class TaskManager {
     }
 
     public String removeTask(String taskTitle) {
-	listOfTasks();
-	String message = "";
-	Iterator<UserTask> iterator = listOfTasks.iterator();
-	while (iterator.hasNext()) {
-	    if (iterator.next().getTaskTitle().equals(taskTitle)) {
-		iterator.remove();
-		message = "Task removed from the list";
-	    } else {
-		message = "No task in the TODO list";
-	    }
-	}
-	file_delete.delete();
 	try {
-	    fileHandler.writeCsv(filePath, listOfTasks);
+	    Reader reader = Files.newBufferedReader(Paths.get(filePath));
+	    CSVReader csvReader = new CSVReader(reader);
+	    List<String[]> userTaskList = csvReader.readAll();
+	    for (int i = 0; i < userTaskList.size(); i++) {
+		String[] strArray = userTaskList.get(i);
+		for (int j = 1; j < strArray.length; j++) {
+		    {
+			if (strArray[j].equalsIgnoreCase(taskTitle)) {
+			    userTaskList.remove(i);
+			    message = "Task removed from the list";
+			    break;
+			} else {
+			    message = "No task in the TODO list";
+			}
+
+		    }
+
+		}
+	    }
+	    reader.close();
+	    FileWriter fileWriter = new FileWriter(filePath);
+	    StringBuilder sb = new StringBuilder();
+	    for (final String[] list : userTaskList) {
+		for (final String str : list) {
+		    fileWriter.append(str + ",");
+		}
+		fileWriter.append("\n");
+	    }
+	    fileWriter.close();
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
 	return message;
-
     }
 
     public String editTaskStatus(String taskTitle) {
 
-	String message = "";
-	UserTask usertask = new UserTask();
 	try {
 	    Reader reader = Files.newBufferedReader(Paths.get(filePath));
 
@@ -192,10 +204,7 @@ public class TaskManager {
 		String[] strArray = userTaskList.get(i);
 		for (int j = 1; j < strArray.length; j++) {
 		    {
-
-			if (strArray[j].equalsIgnoreCase(taskTitle)) {
-			    System.out.println(2);
-
+			if (strArray[j].equalsIgnoreCase(taskTitle)) {		 
 			    userTaskList.get(i)[3] = "Done";
 			    System.out.println(3);// Target replacement
 			    message = "task status marked as Done ";
@@ -206,17 +215,14 @@ public class TaskManager {
 		    }
 		}
 	    }
-
 	    reader.close();
 	    FileWriter fileWriter = new FileWriter(filePath);
 	    StringBuilder sb = new StringBuilder();
 	    for (final String[] list : userTaskList) {
 		for (final String str : list) {
 		    fileWriter.append(str + ",");
-
 		}
 		fileWriter.append("\n");
-
 	    }
 	    fileWriter.close();
 
@@ -266,10 +272,8 @@ public class TaskManager {
 	    for (final String[] list : userTaskList) {
 		for (final String str : list) {
 		    fileWriter.append(str + ",");
-
 		}
 		fileWriter.append("\n");
-
 	    }
 	    fileWriter.close();
 
@@ -278,6 +282,7 @@ public class TaskManager {
 	}
 
     }
+
     public String taskStatusCount() {
 
 	int doneTask = 0;

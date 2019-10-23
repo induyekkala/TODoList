@@ -1,15 +1,8 @@
 package com.novare.IndividualProject;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicInteger;
-
+import java.text.*;
+import java.util.*;
 import com.novare.IndividualProject.*;
 
 public class Function_Task {
@@ -27,7 +20,6 @@ public class Function_Task {
     public void createTask() {
 	fileHandler.createFile(filePath);
     }
-
     public boolean validateDate(String dateValue) {
 
 	boolean status = false;
@@ -41,7 +33,6 @@ public class Function_Task {
 	return status;
 
     }
-
     public void writeTask() {
 
 	try {
@@ -69,7 +60,6 @@ public class Function_Task {
 		{	    
 		userTask = new UserTask(line, taskTitle, dueDate, taskStatus, projectName);
 		List<UserTask> usersTask = new ArrayList<UserTask>();
-		
 		usersTask.add(userTask);
 		fileHandler.writeCsv(filePath, usersTask);
 		}
@@ -117,15 +107,12 @@ public class Function_Task {
 	    System.out.println("TaskId\t\t Task title\t\t   TaskDueDate\t           Status\t\\t         Project Name \n");
 	    System.out.println(
 		    "**************************************************************************************************** \n");
-
 	    for (String sortedUserTask : userTask) {
 		
 		System.out.println(sortedUserTask.replace(",","\t\t"));
 		//System.out.println(sortedUserTask + "\t");
 		System.out.println("\n");
-	    }
-	    
-	    
+	    }  
 	}
 
     }
@@ -141,7 +128,6 @@ public class Function_Task {
 		System.out.println("TaskId\t\t Task title\t\t  TaskDueDate\t         Status\t\t         Project Name \n");
 		System.out.println(
 			"************************************************************************************************ \n");
-
 		for (String sortedUserTask : userTask) {
 		    System.out.println(sortedUserTask.replace(",","\t\t"));
 		    System.out.println("\n");
@@ -156,9 +142,7 @@ public class Function_Task {
 	String taskTitle = input.nextLine();
 	UserTask userTask = taskManager.findTask(taskTitle);
 	boolean ret = false;
-
 	if (userTask != null) {
-
 	    System.out.println("Record in the list is" + "\nTask Id=" + userTask.getTaskId() + "\nTask Title="
 		    + userTask.getTaskTitle() + "\nTask Due Date=" + userTask.getTaskDueDate() + "\nTask Status="
 		    + userTask.getTaskStatus() + "\nProject Name=" + userTask.getProjectName());
@@ -166,7 +150,6 @@ public class Function_Task {
 	} else {
 	    ret = false;
 	}
-
 	return ret;
     }
 
@@ -174,23 +157,18 @@ public class Function_Task {
 
 	System.out.println("Enter the Task to remove from the record");
 	String taskTitle = input.next();
-
 	taskManager.removeTask(taskTitle);
     }
 
     public void removeAProject() {
 	System.out.println("Enter the Project to remove from the record");
 	String projectName = input.next();
-
-	// taskManager.removeProject(projectName);
     }
 
     public void editATaskStatus() {
-
 	System.out.println("Enter the which Task Title status to be changed ");
 	String taskTitle = input.nextLine();
 	taskManager.editTaskStatus(taskTitle);
-
     }
 
     public void editATask() {
@@ -201,10 +179,8 @@ public class Function_Task {
 	System.out.println("Please select the option from the menu to edit");
 	System.out.println("\n 1. Edit Title \n 2. Edit Due Date");
 	System.out.println("Enter the choice");
-	
 	int readChoice = input.nextInt();
 	switch (readChoice) {
-
 	case 1:
 	    taskManager.editTask(taskTitle,readChoice);   
 	    break;   
@@ -212,25 +188,9 @@ public class Function_Task {
 	case 2:    
 	    taskManager.editTask(taskTitle,readChoice);
 	    break;
-
 	}
 
     }
-
-    /*
-     * input.next(); System.out.println("Enter the Task Title to be changed ");
-     * String taskTitle = input.nextLine(); input.next();
-     * 
-     * System.out.println("Enter the which Task due date to be changed "); String
-     * taskDueDate = input.nextLine(); input.next();
-     * System.out.println("Enter the which Project Name to be changed "); String
-     * projectName = input.nextLine(); input.next();
-     * 
-     * taskManager.editTaskTitle(taskId,taskTitle);
-     */
-
-    
-
     public String taskstatusProgress() {
 	String message = taskManager.taskStatusCount();
 	return message;

@@ -48,7 +48,6 @@ public class TaskManagerTest {
 	} else {
 	    fail("Task not added in the list");
 	}
-
     }
 
     @Test
@@ -108,6 +107,7 @@ public class TaskManagerTest {
 	assertTrue(Arrays.equals(arr, exceptedUserTaskArray));
 	assertTrue(Arrays.equals(exceptedUserTaskArray, actualUserTasksArray));
     }
+
     @Test
     public void testFindTask() {
 	userTask = taskManager.findTask("java");
@@ -116,6 +116,7 @@ public class TaskManagerTest {
 	else
 	    assertNotNull(userTask);
     }
+
     @Test
     public void testListOfTasks() {
 	assertTrue(taskManager.listOfTasks().size() <= 0);

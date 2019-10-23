@@ -24,6 +24,7 @@ public class FileHandler {
     private Charset charset = Charset.defaultCharset();
     private String filePath = "/Users/induyekkala/ToDoList.csv"; // Creating File header
     private UserTask userTask = new UserTask();
+
     public void createFile(String filePath) {
 
 	try {
@@ -41,7 +42,7 @@ public class FileHandler {
     }
 
     public boolean writeCsv(String filePath, List<UserTask> usersTask) {
-	boolean status=false;
+	boolean status = false;
 	String HEADER = "Id,  TaskTitle,  DueDate,  Status,  ProjectName";
 	try {
 	    file = new File(filePath);
@@ -51,7 +52,6 @@ public class FileHandler {
 		fileWriter.write(HEADER);
 		fileWriter.append(Line_Separator);
 	    }
-
 	    for (UserTask user : usersTask) {
 		fileWriter.write(String.valueOf(+user.getTaskId()));
 
@@ -67,12 +67,11 @@ public class FileHandler {
 		fileWriter.write(",");
 		fileWriter.write(user.getProjectName());
 		fileWriter.write(Line_Separator);
-		status=true;
+		status = true;
 	    }
-	    
 
 	} catch (Exception e) {
-	    status=false;
+	    status = false;
 	    e.printStackTrace();
 	} finally {
 	    try {
@@ -90,19 +89,15 @@ public class FileHandler {
     public boolean read(String filepath) {
 	File file = new File(filepath);
 	if (file.exists()) {
-
 	    return true;
 	} else {
 	    return false;
 	}
-
     }
 
     public void readCSV(String filePath) {
 	try {
-	    
 	    try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
-
 		stream.forEach(System.out::println);
 	    }
 
@@ -115,7 +110,6 @@ public class FileHandler {
 	BufferedReader reader = null;
 	int lines = 1;
 	try {
-
 	    reader = new BufferedReader(new FileReader(filePath));
 	    reader.readLine();
 	    while (reader.readLine() != null)
@@ -124,7 +118,6 @@ public class FileHandler {
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
-
 	finally {
 	    try {
 		reader.close();
@@ -132,8 +125,6 @@ public class FileHandler {
 		e.printStackTrace();
 	    }
 	}
-
 	return lines;
-
     }
 }
