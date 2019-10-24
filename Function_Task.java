@@ -1,15 +1,8 @@
 package com.novare.IndividualProject;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicInteger;
-
+import java.text.*;
+import java.util.*;
 import com.novare.IndividualProject.*;
 
 public class Function_Task {
@@ -18,7 +11,7 @@ public class Function_Task {
     private TaskManager taskManager = new TaskManager();
 //	 Date format
     private DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-    private UserTask user = new UserTask();
+    private UserTask userTask = new UserTask();
     private Scanner input = new Scanner(System.in);
     private FileHandler fileHandler = new FileHandler();
     private ArrayList<UserTask> usersTask = new ArrayList<UserTask>();
@@ -27,7 +20,6 @@ public class Function_Task {
     public void createTask() {
 	fileHandler.createFile(filePath);
     }
-
     public boolean validateDate(String dateValue) {
 
 	boolean status = false;
@@ -36,13 +28,11 @@ public class Function_Task {
 	    taskDate = (Date) formatter.parse(dateValue);
 
 	} catch (ParseException e) {
-//	    System.out.println("Please enter date in correct format"+e.getMessage());
 	    status = false;
 	}
 	return status;
 
     }
-
     public void writeTask() {
 
 	try {
@@ -56,21 +46,21 @@ public class Function_Task {
 	    Date taskDueDate = null;
 	    taskDueDate = (Date) formatter.parse(taskDate);
 	    String dueDate = formatter.format(taskDueDate);
-	    user.setTaskStatus("Not Done");
-	    String taskStatus = user.getTaskStatus();
+	    userTask.setTaskStatus("Not Done");
+	    String taskStatus = userTask.getTaskStatus();
 	    System.out
 		    .println("Enter a project name (Novare SDA Lund,Novare SDA Stockholm are the valid project names)");
 	    String projectName = input.nextLine();
 	    String list_projectName[] = { "Novare SDA Lund", "Novare SDA Stockholm" };
 	    int line = fileHandler.findLineNumber();
 	    if (list_projectName[0].equals(projectName) || list_projectName[1].equals(projectName)) {
-		boolean status=taskManager.isDuplicateTask(taskTitle);
+		boolean status=taskManager.isDuplicateTask(taskTitle);	
+		System.out.println(status);
 		if(status==true)
-		{
-		user = new UserTask(line, taskTitle, dueDate, taskStatus, projectName);
+		{	    
+		userTask = new UserTask(line, taskTitle, dueDate, taskStatus, projectName);
 		List<UserTask> usersTask = new ArrayList<UserTask>();
-		
-		usersTask.add(user);
+		usersTask.add(userTask);
 		fileHandler.writeCsv(filePath, usersTask);
 		}
 		else
@@ -86,9 +76,9 @@ public class Function_Task {
 		System.out.println("Re-enter the project name");
 		projectName = input.nextLine();
 		taskManager.isDuplicateTask(taskTitle);
-		user = new UserTask(line, taskTitle, dueDate, taskStatus, projectName);
+		userTask = new UserTask(line, taskTitle, dueDate, taskStatus, projectName);
 		List<UserTask> usersTask = new ArrayList<UserTask>();
-		usersTask.add(user);
+		usersTask.add(userTask);
 		fileHandler.writeCsv(filePath, usersTask);
 	    }
 
@@ -113,16 +103,16 @@ public class Function_Task {
 	} else {
 
 	    System.out.println(
-		    "****************************************************************************************\n");
-	    System.out.println("TaskId\t\t Task title\t\tTaskDueDate\t    Status\t\tProject Name \n");
+		    "****************************************************************************************************\n");
+	    System.out.println("TaskId\t\t Task title\t\t   TaskDueDate\t           Status\t\\t         Project Name \n");
 	    System.out.println(
-		    "**************************************************************************************** \n");
-
+		    "**************************************************************************************************** \n");
 	    for (String sortedUserTask : userTask) {
-
-		System.out.println(sortedUserTask + "\t");
+		
+		System.out.println(sortedUserTask.replace(",","\t\t"));
+		//System.out.println(sortedUserTask + "\t");
 		System.out.println("\n");
-	    }
+	    }  
 	}
 
     }
@@ -134,15 +124,12 @@ public class Function_Task {
 	} else {
 	    if (userTask != null) {
 		System.out.println(
-			"****************************************************************************************\n");
-		System.out.println("TaskId\t\t Task title\t\tTaskDueDate\t    Status\t\tProject Name \n");
+			"************************************************************************************************\n");
+		System.out.println("TaskId\t\t Task title\t\t  TaskDueDate\t         Status\t\t         Project Name \n");
 		System.out.println(
-			"**************************************************************************************** \n");
-
+			"************************************************************************************************ \n");
 		for (String sortedUserTask : userTask) {
-
-		    System.out.printf(String.format("%20s", sortedUserTask));
-
+		    System.out.println(sortedUserTask.replace(",","\t\t"));
 		    System.out.println("\n");
 		}
 	    }
@@ -155,9 +142,7 @@ public class Function_Task {
 	String taskTitle = input.nextLine();
 	UserTask userTask = taskManager.findTask(taskTitle);
 	boolean ret = false;
-
 	if (userTask != null) {
-
 	    System.out.println("Record in the list is" + "\nTask Id=" + userTask.getTaskId() + "\nTask Title="
 		    + userTask.getTaskTitle() + "\nTask Due Date=" + userTask.getTaskDueDate() + "\nTask Status="
 		    + userTask.getTaskStatus() + "\nProject Name=" + userTask.getProjectName());
@@ -165,7 +150,6 @@ public class Function_Task {
 	} else {
 	    ret = false;
 	}
-
 	return ret;
     }
 
@@ -173,64 +157,40 @@ public class Function_Task {
 
 	System.out.println("Enter the Task to remove from the record");
 	String taskTitle = input.next();
-
 	taskManager.removeTask(taskTitle);
     }
 
     public void removeAProject() {
 	System.out.println("Enter the Project to remove from the record");
 	String projectName = input.next();
-
-	// taskManager.removeProject(projectName);
     }
 
     public void editATaskStatus() {
-
 	System.out.println("Enter the which Task Title status to be changed ");
 	String taskTitle = input.nextLine();
 	taskManager.editTaskStatus(taskTitle);
-
     }
 
     public void editATask() {
 
 	Scanner input = new Scanner(System.in);
-	System.out.println("\\n1. Edit Title \n 2.Edit Status \n3. Edit Due Date");
+	System.out.println("Enter the task id whose details to be updated");
+	String taskTitle=input.next();
+	System.out.println("Please select the option from the menu to edit");
+	System.out.println("\n 1. Edit Title \n 2. Edit Due Date");
 	System.out.println("Enter the choice");
-	int choice = input.nextInt();
-	switch (choice) {
-
+	int readChoice = input.nextInt();
+	switch (readChoice) {
 	case 1:
-	    System.out.println("Enter the which Task Id to be changed");
-	    int taskId = input.nextInt();
-	    taskManager.editTaskTitle(taskId);
+	    taskManager.editTask(taskTitle,readChoice);   
+	    break;   
 	    
+	case 2:    
+	    taskManager.editTask(taskTitle,readChoice);
 	    break;
-	case 2:
-	    System.out.println("Enter the which Task Title status to be changed ");
-	    String taskTitle = input.nextLine();
-	    taskManager.editTaskStatus(taskTitle);
-	    break;
-	    
-
 	}
 
     }
-
-    /*
-     * input.next(); System.out.println("Enter the Task Title to be changed ");
-     * String taskTitle = input.nextLine(); input.next();
-     * 
-     * System.out.println("Enter the which Task due date to be changed "); String
-     * taskDueDate = input.nextLine(); input.next();
-     * System.out.println("Enter the which Project Name to be changed "); String
-     * projectName = input.nextLine(); input.next();
-     * 
-     * taskManager.editTaskTitle(taskId,taskTitle);
-     */
-
-    
-
     public String taskstatusProgress() {
 	String message = taskManager.taskStatusCount();
 	return message;
