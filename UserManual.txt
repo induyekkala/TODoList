@@ -1,0 +1,47 @@
+
+
+TODO List 
+
+User manual
+
+Adding a new task
+1. Enter the application
+2. Type 2 (Add new task)
+3. Add task title
+4. Add due date
+5. Add project name
+
+Task will be added to the application with default status as Not Done
+
+
+Edit an existing task - Editing a task title or due date
+1. Enter the application
+2. Type 3 (Edit Task (Update, Mark as done, Remove)
+3. Type 1 (Edit the Task in the TODO list)
+4. Type 1 (for updating the task title)
+5. Type 2 (for updating the due date)
+6. Enter new task title or due date based on the selected option above
+
+Edit an existing task - Marking the status of an existing task as Done
+1. Enter the application
+2. Type 3 (Edit Task (Update, Mark as done, Remove)
+3. Type 2 (Update a Task Status as Done)
+4. Enter task title for which you need to update the status
+
+Edit an existing task - Remove the task from the TODO list
+1. Enter the application
+2. Type 3 (Edit Task (Update, Mark as done, Remove)
+3. Type 3 (Remove the Task from the TODO List)
+4. Enter the task title that need to be removed
+
+Show the list of task by due date
+1. Enter the application
+2. Type 1 (Show Task List (by Due date or project)
+3. Type 1
+4. All the tasks are displayed by due date in chronological order (immediate tasks will be displayed first)
+
+Show the list of task by Project name
+1. Enter the application
+2. Type 1 (Show Task List (by Due date or project)
+3. Type 2
+4. All the tasks are displayed Project wise
