@@ -1,7 +1,5 @@
 package com.novare.IndividualProject;
 
-
-
 import static org.junit.Assert.*;
 
 import java.io.File;
@@ -19,10 +17,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-
 public class TaskManagerTest {
     /**
-     * Initialization of variables 
+     * Initialization of variables
      */
 
     private Path file_Path = new File("/Users/induyekkala/ToDoList.csv").toPath();
@@ -35,8 +32,8 @@ public class TaskManagerTest {
     private String filePath = "/Users/induyekkala/ToDoList.csv";
 
     /**
-     * this test case helps to check whether the file is exist or not 
-     * if file is not exist the function will fail
+     * this test case helps to check whether the file is exist or not if file is not
+     * exist the function will fail
      */
     @Before
     public void testCheckForFile() {
@@ -59,17 +56,18 @@ public class TaskManagerTest {
 	boolean actual = fileHandler.writeCsv(filePath, listOfTasks);
 	if (actual == true) {
 	    System.out.println("Task added in the list");
-	} 
-	//negative test case
+	}
+	// negative test case
 	else {
 	    fail("Task not added in the list");
 	}
     }
-/**
- * check whether the tasks are sorted by project name or not
- * Reads the content from the file and sort the task by project name and store in an exceptedUserTaskArray and compared
- * with actualUserTaskArray variables
- */
+
+    /**
+     * check whether the tasks are sorted by project name or not Reads the content
+     * from the file and sort the task by project name and store in an
+     * exceptedUserTaskArray and compared with actualUserTaskArray variables
+     */
     @Test
     public void testSortProjectName() {
 
@@ -95,11 +93,12 @@ public class TaskManagerTest {
 	assertTrue(Arrays.equals(arr, exceptedUserTaskArray));
 	assertTrue(Arrays.equals(exceptedUserTaskArray, actualUserTasksArray));
     }
-/**
- * check whether the tasks are sorted by due date or not
- * Reads the content from the file and sort the task by project name and store in an exceptedUserTaskArray and compared
- * with actualUserTaskArray variables
- */
+
+    /**
+     * check whether the tasks are sorted by due date or not Reads the content from
+     * the file and sort the task by project name and store in an
+     * exceptedUserTaskArray and compared with actualUserTaskArray variables
+     */
     @Test
     public void testSortDueDate() {
 	String[] exceptedUserTaskArray = { "" };
@@ -131,33 +130,36 @@ public class TaskManagerTest {
 	assertTrue(Arrays.equals(arr, exceptedUserTaskArray));
 	assertTrue(Arrays.equals(exceptedUserTaskArray, actualUserTasksArray));
     }
+
     /**
-     * check the whether the given string is in the list of task title or not 
-     * the test case fails if the task title is not in the list
+     * check the whether the given string is in the list of task title or not the
+     * test case fails if the task title is not in the list
      */
 
     @Test
     public void testFindTask() {
 	userTask = taskManager.findTask("java");
 	if (userTask == null)
-	    //negative test case
+	    // negative test case
 	    assertNull(userTask);
 	else
-	    //positive test case
+	    // positive test case
 	    assertNotNull(userTask);
     }
-/**
- * check for the task in the list if the size is less then zero
- * that means no tasks in the list and test case fails
- */
+
+    /**
+     * check for the task in the list if the size is less then zero that means no
+     * tasks in the list and test case fails
+     */
     @Test
     public void testListOfTasks() {
 	assertTrue(taskManager.listOfTasks().size() <= 0);
     }
+
     /**
-     * check for whether the give string in the list or not 
-     * if it is in the list removes the task from the list or else
-     * the test case will fail if the task title is not in the list 
+     * check for whether the give string in the list or not if it is in the list
+     * removes the task from the list or else the test case will fail if the task
+     * title is not in the list
      */
 
     @Test
@@ -165,10 +167,11 @@ public class TaskManagerTest {
 	String message = taskManager.removeTask("java");
 	assertEquals(message, "Task removed from the list");
     }
+
     /**
-     * check for whether the give string is in the list or not
-     * if the string is in the list changes the task status from Not Done to Done status or
-     * else the task will fail if the task title is not in the list
+     * check for whether the give string is in the list or not if the string is in
+     * the list changes the task status from Not Done to Done status or else the
+     * task will fail if the task title is not in the list
      * 
      */
 
@@ -181,4 +184,3 @@ public class TaskManagerTest {
     }
 
 }
-
