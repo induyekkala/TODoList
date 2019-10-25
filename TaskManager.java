@@ -185,7 +185,7 @@ public class TaskManager {
 
 	listOfTasks();
 	String message = "";
-	boolean status = false;
+	boolean status = true;
 	Iterator<UserTask> iterator = listOfTasks.iterator();
 	while (iterator.hasNext()) {
 
